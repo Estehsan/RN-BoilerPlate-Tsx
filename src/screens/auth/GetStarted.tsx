@@ -44,7 +44,6 @@ const Center = styled.View`
 `;
 const CreateAccount = styled.TouchableOpacity`
   align-items: center;
-  padding-top: 10;
 `;
 const GreenText = styled.Text`
   color: #4ca6a8;

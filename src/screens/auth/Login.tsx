@@ -44,6 +44,11 @@ const Login = ({navigation}) => {
           placeHolder="Sign In "
           // onPress={() => navigation.navigate('Login')}
         />
+        <CreateAccount onPress={() => navigation.navigate('Register')}>
+          <H3>
+            New User? <GreenText> Create your Account now</GreenText>
+          </H3>
+        </CreateAccount>
       </Center>
     </Bg>
   );
@@ -55,4 +60,11 @@ const Center = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+`;
+const CreateAccount = styled.TouchableOpacity`
+  align-items: center;
+`;
+const GreenText = styled.Text`
+  color: #4ca6a8;
+  font-weight: 500;
 `;
