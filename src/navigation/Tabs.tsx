@@ -1,14 +1,26 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {GetStarted, Login, Register} from '../screens/auth';
+// import {Home} from '../screens/main';
+
+const Stack = createNativeStackNavigator();
 
 const Tabs = () => {
   return (
-    <View>
-      <Text>Tabs</Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen name="GetStarted" component={GetStarted} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Register} />
+
+        {/* <Stack.Screen name="Home" component={Home} /> */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
 export default Tabs;
-
-const styles = StyleSheet.create({});
