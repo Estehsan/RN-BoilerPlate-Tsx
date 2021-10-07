@@ -1,14 +1,38 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import styled from 'styled-components';
-
-import {Bg, H1, H3} from '../../component/basics';
+import {Bg, CustomModal, H1, H2, H3} from '../../component/basics';
 import Btn from '../../component/basics/Btn';
 import Tinput from '../../component/basics/Tinput';
+import {loginUser} from '../../config/authApi';
+import {emailVali} from '../../validator/emailVali';
+import {passVali} from '../../validator/passVali';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
+  const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const onLoginPressed = async () => {
+    const emailError = emailVali(email.value);
+    const passwordError = passVali(password.value);
+    if (emailError || passwordError) {
+      setEmail({...email, error: emailError});
+      setPassword({...password, error: passwordError});
+      return;
+    }
+    setLoading(true);
+    const response = await loginUser({
+      email: email.value,
+      password: password.value,
+    });
+    if (response.error) {
+      setError(response.error);
+    }
+    setLoading(false);
+  };
 
   return (
     <Bg>
@@ -19,37 +43,76 @@ const Login = ({navigation}) => {
         <H1 />
 
         <Tinput
+          iconName="email"
           placeholder="Email"
           label="Email"
-          iconName="email"
-          error="Error hai ye "
-          errorText="Eror deta hai"
-          onChangeText={e => {
-            setEmail({value: e, error: ''});
-          }}
-          value={email}
+          value={email.value}
+          onChangeText={text => setEmail({value: text, error: ''})}
+          error={!!email.error}
+          errorText={email.error}
+          autoCapitalize="none"
+          autoCompleteType="email"
+          textContentType="emailAddress"
+          keyboardType="email-address"
         />
         <Tinput
+          iconName="lock"
           placeholder="Password"
           label="Password"
-          iconName="lock"
-          error="Error hai ye "
-          errorText="Eror deta hai"
-          onChangeText={e => {
-            setPassword({value: e, error: ''});
-          }}
-          value={email}
+          returnKeyType="done"
+          value={password.value}
+          onChangeText={text => setPassword({value: text, error: ''})}
+          error={!!password.error}
+          errorText={password.error}
+          secureTextEntry
         />
-        <Btn
-          placeHolder="Sign In "
-          // onPress={() => navigation.navigate('Login')}
-        />
+        {loading === null ? (
+          <H1>Sabar</H1>
+        ) : (
+          <Btn placeHolder="Sign In " onPress={onLoginPressed} />
+        )}
+
+        <CustomModal message={error} onDismiss={() => setError('')} />
+
         <CreateAccount onPress={() => navigation.navigate('Register')}>
           <H3>
             New User? <GreenText> Create your Account now</GreenText>
           </H3>
         </CreateAccount>
       </Center>
+      {/* {!error ? (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
+          }}>
+          <H1>{error}</H1>
+
+          <Pressable onPress={() => setModalVisible(!modalVisible)}>
+            <H2>Hide Modal</H2>
+          </Pressable>
+        </Modal>
+      ) : null} */}
+
+      {/* {error ? (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={loading}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!loading);
+          }}>
+          <H1>{error}</H1>
+
+          <Pressable onPress={() => setModalVisible(!modalVisible)}>
+            <H2>Hide Modal</H2>
+          </Pressable>
+        </Modal>
+      ) : null} */}
     </Bg>
   );
 };

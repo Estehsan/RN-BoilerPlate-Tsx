@@ -1,14 +1,45 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
-import {Bg, H1, H3} from '../../component/basics';
+import {signUpUser} from '../../config/authApi';
+
+import {Bg, H1, H3, P} from '../../component/basics';
 import Btn from '../../component/basics/Btn';
 import Tinput from '../../component/basics/Tinput';
+import {emailVali} from '../../validator/emailVali';
+import {passVali} from '../../validator/passVali';
+import {nameVali} from '../../validator/nameVali';
 
 const Register = ({navigation}) => {
   const [name, setName] = useState({value: '', error: ''});
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
+  const [loading, setLoading] = useState();
+  const [error, setError] = useState();
+
+  const onSignUpPressed = async () => {
+    const nameError = nameVali(name.value);
+    const emailError = emailVali(email.value);
+    const passwordError = passVali(password.value);
+    if (emailError || passwordError || nameError) {
+      setName({...name, error: nameError});
+      setEmail({...email, error: emailError});
+      setPassword({...password, error: passwordError});
+      return;
+    }
+    setLoading(true);
+    const response = await signUpUser({
+      name: name.value,
+      email: email.value,
+      password: password.value,
+    });
+
+    if (response.error) {
+      setError(response.error);
+    }
+    navigation.replace('Home');
+    setLoading(false);
+  };
 
   return (
     <Bg>
@@ -21,40 +52,40 @@ const Register = ({navigation}) => {
         <Tinput
           placeholder="Enter your Name"
           label="name"
+          returnKeyType="next"
           iconName="account-plus"
-          error="Error hai ye "
-          errorText="Eror deta hai"
-          onChangeText={e => {
-            setName({value: e, error: ''});
-          }}
-          value={name}
+          value={name.value}
+          onChangeText={text => setName({value: text, error: ''})}
+          error={!!name.error}
+          errorText={name.error}
         />
         <Tinput
+          iconName="email"
           placeholder="Enter your Email"
           label="Email"
-          iconName="email"
-          error="Error hai ye "
-          errorText="Eror deta hai"
-          onChangeText={e => {
-            setEmail({value: e, error: ''});
-          }}
-          value={email}
+          returnKeyType="next"
+          value={email.value}
+          onChangeText={text => setEmail({value: text, error: ''})}
+          error={!!email.error}
+          errorText={email.error}
+          autoCapitalize="none"
+          autoCompleteType="email"
+          textContentType="emailAddress"
+          keyboardType="email-address"
         />
         <Tinput
           placeholder="Enter your Password"
           label="Password"
           iconName="lock"
-          error="Error hai ye "
-          errorText="Eror deta hai"
-          onChangeText={e => {
-            setPassword({value: e, error: ''});
-          }}
-          value={password}
+          returnKeyType="done"
+          value={password.value}
+          onChangeText={text => setPassword({value: text, error: ''})}
+          error={!!password.error}
+          errorText={password.error}
+          secureTextEntry
         />
-        <Btn
-          placeHolder="Sign In "
-          // onPress={() => navigation.navigate('Register')}
-        />
+        <Btn placeHolder="Sign In " onPress={onSignUpPressed} />
+        <P>{error}</P>
         <CreateAccount onPress={() => navigation.navigate('Login')}>
           <H3>
             Already Registered? <GreenText> Login Now</GreenText>

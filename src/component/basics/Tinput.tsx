@@ -4,18 +4,13 @@ import {P} from '.';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {theme} from '../../theme';
 
-interface InputProps {
-  errorText: 'string | null';
-  description: 'string | null';
-  iconName: 'string | null';
-}
+// interface InputProps {
+//   errorText: 'string | null';
+//   description: 'string | null';
+//   iconName: 'string | null';
+// }
 
-const Tinput: FC<InputProps> = ({
-  errorText,
-  description,
-  iconName,
-  ...props
-}) => {
+const Tinput: FC = ({errorText, description, iconName, ...props}) => {
   const [focused, setFocused] = React.useState(false);
 
   return (

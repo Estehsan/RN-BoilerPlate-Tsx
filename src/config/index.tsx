@@ -1,3 +1,4 @@
-import keys from './keys';
+import {firebase} from './firebase';
+import {authApi} from './authApi';
 
-export {keys};
+export {firebase, authApi};
