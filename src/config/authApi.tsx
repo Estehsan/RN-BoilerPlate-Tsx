@@ -41,3 +41,30 @@ export const sendEmailWithPassword = async email => {
     };
   }
 };
+
+// export async function signInWithGoogle({email, password}) {
+
+//   const signInWithGoogle = async () => {
+//     if (Platform.OS === 'web') {
+//       const provider = new firebase.auth.GoogleAuthProvider()
+//       firebase.auth().signInWithPopup(provider)
+//       return
+//     }
+
+//     try {
+//       const result = await Google.logInAsync({
+//         clientId:""
+//         scopes: ['profile', 'email'],
+//       })
+//       if (result.type === 'success') {
+//         const credential = firebase.auth.GoogleAuthProvider.credential(
+//           result.idToken,
+//           result.accessToken
+//         )
+//         await firebase.auth().signInWithCredential(credential)
+//       } else {
+//         alert('Something went wrong.')
+//       }
+//     } catch ({ message }) {
+//       alert(message)
+//     }
