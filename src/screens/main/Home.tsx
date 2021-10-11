@@ -11,8 +11,8 @@ const Home: FC = () => {
     <Bg>
       <Center>
         <Icon name="facebook" size={20} color="red" />
-        <H3>{auth.currentUser?.displayName}</H3>
-        <H3>{auth.currentUser?.uid}</H3>
+        {/* <H3>{auth.currentUser?.displayName}</H3>
+        <H3>{auth.currentUser?.uid}</H3> */}
 
         <Btn onPress={logoutUser} placeHolder="Logout" />
       </Center>

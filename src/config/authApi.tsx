@@ -1,13 +1,23 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import {auth, db} from './firebase';
+import {authen, db} from './firebase';
+import auth from '@react-native-firebase/auth';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+// import authen as auth from '@react-native-firebase/auth';
+import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
+import {Alert, Platform} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export function logoutUser() {
-  auth.signOut();
+  authen.signOut();
 }
 
 export async function signUpUser({name, email, password}) {
   try {
-    const res = await auth.createUserWithEmailAndPassword(email, password);
+    const res = await authen.createUserWithEmailAndPassword(email, password);
     const user = res.user;
     await db.collection('users').add({
       uid: user.uid,
@@ -22,7 +32,7 @@ export async function signUpUser({name, email, password}) {
 }
 export async function loginUser({email, password}) {
   try {
-    const {user} = await auth.signInWithEmailAndPassword(email, password);
+    const {user} = await authen.signInWithEmailAndPassword(email, password);
     return {user};
   } catch (error) {
     return {
@@ -33,7 +43,7 @@ export async function loginUser({email, password}) {
 
 export const sendEmailWithPassword = async email => {
   try {
-    await auth.sendPasswordResetEmail(email);
+    await authen.sendPasswordResetEmail(email);
     return {};
   } catch (error) {
     return {
@@ -41,30 +51,48 @@ export const sendEmailWithPassword = async email => {
     };
   }
 };
+export const fbLogin = async () => {
+  // Attempt login with permissions
+  const result = await LoginManager.logInWithPermissions([
+    'public_profile',
+    'email',
+  ]);
 
-// export async function signInWithGoogle({email, password}) {
+  if (result.isCancelled) {
+    throw 'User cancelled the login process';
+  }
 
-//   const signInWithGoogle = async () => {
-//     if (Platform.OS === 'web') {
-//       const provider = new firebase.auth.GoogleAuthProvider()
-//       firebase.auth().signInWithPopup(provider)
-//       return
-//     }
+  // Once signed in, get the users AccesToken
+  const data = await AccessToken.getCurrentAccessToken();
 
-//     try {
-//       const result = await Google.logInAsync({
-//         clientId:""
-//         scopes: ['profile', 'email'],
-//       })
-//       if (result.type === 'success') {
-//         const credential = firebase.auth.GoogleAuthProvider.credential(
-//           result.idToken,
-//           result.accessToken
-//         )
-//         await firebase.auth().signInWithCredential(credential)
-//       } else {
-//         alert('Something went wrong.')
-//       }
-//     } catch ({ message }) {
-//       alert(message)
-//     }
+  if (!data) {
+    throw 'Something went wrong obtaining access token';
+  }
+
+  // Create a Firebase credential with the AccessToken
+  const facebookCredential = auth.FacebookAuthProvider.credential(
+    data.accessToken,
+  );
+
+  // Sign-in the user with the credential
+  return auth().signInWithCredential(facebookCredential);
+};
+
+export const signInWithGoogle = async () => {
+  try {
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
+    console.warn(userInfo);
+    setUserInfo({userInfo: userInfo, loggedIn: true});
+  } catch (error) {
+    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      // user cancelled the login flow
+    } else if (error.code === statusCodes.IN_PROGRESS) {
+      // operation (f.e. sign in) is in progress already
+    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      // play services not available or outdated
+    } else {
+      // some other error happened
+    }
+  }
+};

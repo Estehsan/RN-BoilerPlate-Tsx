@@ -16,12 +16,12 @@ const Tabs = () => {
           headerShown: false,
         }}>
         <Stack.Screen name="Loading" component={Loading} />
+        <Stack.Screen name="Home" component={Home} />
 
         <Stack.Screen name="GetStarted" component={GetStarted} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
 
-        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );

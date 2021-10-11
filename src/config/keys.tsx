@@ -9,13 +9,16 @@ export const FIREBASE_CONFIG = {
   measurementId: 'G-52MV76YDQJ',
 };
 
-// Replace with your own IDs! follow the guides here:
+// Replace with your own IDs!
+
+// 👇 Google ID's are here 👇
 export const ANDROID_GOOGLE_CLIENT_ID =
-  '878215484396-4pbcf3tghqe9sa0pvq3fifb5etnn4q6s.apps.googleusercontent.com';
+  '1062141256403-6b906i3k3j80sd2gn0bil5uhgq9vrqlq.apps.googleusercontent.com';
 export const IOS_GOOGLE_CLIENT_ID =
   '1062141256403-un9nksa70fqp18fp5sti5mh83cbqgkqi.apps.googleusercontent.com';
 
 export const WEB_CLIENT_ID =
   '1062141256403-i6kb61tgdq8524f9kthl4tcnbbgfvt1u.apps.googleusercontent.com';
 
-export const WEB_SECRET_ID = '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';
+// 👇 Facebook App key Here 👇
+export const APP_KEY = '857933798245745';

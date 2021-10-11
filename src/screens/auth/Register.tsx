@@ -37,7 +37,6 @@ const Register = ({navigation}) => {
     if (response.error) {
       setError(response.error);
     }
-    navigation.replace('Home');
     setLoading(false);
   };
 
