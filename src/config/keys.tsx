@@ -12,13 +12,8 @@ export const FIREBASE_CONFIG = {
 // Replace with your own IDs!
 
 // 👇 Google ID's are here 👇
-export const ANDROID_GOOGLE_CLIENT_ID =
-  '1062141256403-6b906i3k3j80sd2gn0bil5uhgq9vrqlq.apps.googleusercontent.com';
-export const IOS_GOOGLE_CLIENT_ID =
-  '1062141256403-un9nksa70fqp18fp5sti5mh83cbqgkqi.apps.googleusercontent.com';
-
 export const WEB_CLIENT_ID =
-  '1062141256403-i6kb61tgdq8524f9kthl4tcnbbgfvt1u.apps.googleusercontent.com';
+  '175118731471-sjhbens0tb9dnri7p1cmkk1t48670128.apps.googleusercontent.com';
 
 // 👇 Facebook App key Here 👇
 export const APP_KEY = '857933798245745';

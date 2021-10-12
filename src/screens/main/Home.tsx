@@ -1,19 +1,14 @@
 import React, {FC, useState} from 'react';
 import {Bg, H1, H2, Ce, H3} from '../../component/basics';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {logoutUser} from '../../config/authApi';
-import {auth, db} from '../../config/firebase';
+import {authen, db} from '../../config/firebase';
 import styled from 'styled-components';
 import Btn from '../../component/basics/Btn';
-import {FlatList} from 'react-native';
+// import {FlatList} from 'react-native';
 const Home: FC = () => {
   return (
     <Bg>
       <Center>
-        <Icon name="facebook" size={20} color="red" />
-        {/* <H3>{auth.currentUser?.displayName}</H3>
-        <H3>{auth.currentUser?.uid}</H3> */}
-
         <Btn onPress={logoutUser} placeHolder="Logout" />
       </Center>
     </Bg>

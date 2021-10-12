@@ -12,7 +12,7 @@ import {Alert, Platform} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function logoutUser() {
-  authen.signOut();
+  auth().signOut();
 }
 
 export async function signUpUser({name, email, password}) {
@@ -79,20 +79,12 @@ export const fbLogin = async () => {
 };
 
 export const signInWithGoogle = async () => {
-  try {
-    await GoogleSignin.hasPlayServices();
-    const userInfo = await GoogleSignin.signIn();
-    console.warn(userInfo);
-    setUserInfo({userInfo: userInfo, loggedIn: true});
-  } catch (error) {
-    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      // user cancelled the login flow
-    } else if (error.code === statusCodes.IN_PROGRESS) {
-      // operation (f.e. sign in) is in progress already
-    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      // play services not available or outdated
-    } else {
-      // some other error happened
-    }
-  }
+  // Get the users ID token
+  const {idToken} = await GoogleSignin.signIn();
+
+  // Create a Google credential with the token
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+  // Sign-in the user with the credential
+  return auth().signInWithCredential(googleCredential);
 };

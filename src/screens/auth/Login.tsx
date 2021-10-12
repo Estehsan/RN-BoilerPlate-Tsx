@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import styled from 'styled-components';
 import {Bg, CustomModal, H1, H2, H3} from '../../component/basics';
 import Btn from '../../component/basics/Btn';
@@ -66,8 +65,13 @@ const Login = ({navigation}) => {
           errorText={password.error}
           secureTextEntry
         />
+        <ForgotPass onPress={() => navigation.navigate('Reset')}>
+          <H3>
+            Fortgot Password? <GreenText> Reset Now</GreenText>
+          </H3>
+        </ForgotPass>
         {loading === null ? (
-          <H1>Sabar</H1>
+          <H1>Loading</H1>
         ) : (
           <Btn placeHolder="Sign In " onPress={onLoginPressed} />
         )}
@@ -80,39 +84,6 @@ const Login = ({navigation}) => {
           </H3>
         </CreateAccount>
       </Center>
-      {/* {!error ? (
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(!modalVisible);
-          }}>
-          <H1>{error}</H1>
-
-          <Pressable onPress={() => setModalVisible(!modalVisible)}>
-            <H2>Hide Modal</H2>
-          </Pressable>
-        </Modal>
-      ) : null} */}
-
-      {/* {error ? (
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={loading}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(!loading);
-          }}>
-          <H1>{error}</H1>
-
-          <Pressable onPress={() => setModalVisible(!modalVisible)}>
-            <H2>Hide Modal</H2>
-          </Pressable>
-        </Modal>
-      ) : null} */}
     </Bg>
   );
 };
@@ -130,4 +101,7 @@ const CreateAccount = styled.TouchableOpacity`
 const GreenText = styled.Text`
   color: #4ca6a8;
   font-weight: 500;
+`;
+const ForgotPass = styled.TouchableOpacity`
+  color: #4ca6a8;
 `;

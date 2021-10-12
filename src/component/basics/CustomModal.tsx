@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {Modal, Pressable, StyleSheet, Text, View} from 'react-native';
-import {H1, H2, H3, P} from '.';
+import {H1, H2, H3, H4, P} from '.';
+import {theme} from '../../theme';
 
 // interface Props {
 //   props: string | null;
@@ -11,19 +12,26 @@ const CustomModal: FC = ({type = 'error', message, onDismiss}) => {
     <Modal animationType="slide" transparent={true} visible={!!message}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <H2>Error</H2>
-          <H2></H2>
+          <Text
+            style={{
+              fontSize: 30,
+              color: type === 'error' ? 'green' : 'red',
+            }}>
+            Error
+          </Text>
+          <H2 />
 
-          <P>{message}</P>
+          <Text>{message}</Text>
           <Pressable
             style={{
               borderRadius: 5,
               paddingVertical: 10,
-              paddingHorizontal: 10,
-              backgroundColor: 'red',
+              paddingHorizontal: 40,
+              backgroundColor: theme.colors.primary,
+              marginVertical: 20,
             }}
             onPress={onDismiss}>
-            <H2>Ok</H2>
+            <Text style={styles.textStyle}>Ok</Text>
           </Pressable>
         </View>
       </View>

@@ -1,8 +1,12 @@
 import React, {FC} from 'react';
-import {Tabs} from './src/navigation';
+import MainApp from './src/navigation';
 
 const App: FC = () => {
-  return <Tabs />;
+  return (
+    <>
+      <MainApp />
+    </>
+  );
 };
 
 export default App;
