@@ -3,12 +3,14 @@ import styled from 'styled-components';
 
 import {signUpUser} from '../../config/authApi';
 
-import {Bg, H1, H3, P} from '../../component/basics';
+import {Bg, CustomModal, H1, H3, P} from '../../component/basics';
 import Btn from '../../component/basics/Btn';
 import Tinput from '../../component/basics/Tinput';
 import {emailVali} from '../../validator/emailVali';
 import {passVali} from '../../validator/passVali';
 import {nameVali} from '../../validator/nameVali';
+import {ActivityIndicator} from 'react-native';
+import {theme} from '../../theme';
 
 const Register = ({navigation}) => {
   const [name, setName] = useState({value: '', error: ''});
@@ -18,16 +20,19 @@ const Register = ({navigation}) => {
   const [error, setError] = useState();
 
   const onSignUpPressed = async () => {
+    setLoading(true);
+
     const nameError = nameVali(name.value);
     const emailError = emailVali(email.value);
     const passwordError = passVali(password.value);
+    setLoading(false);
+
     if (emailError || passwordError || nameError) {
       setName({...name, error: nameError});
       setEmail({...email, error: emailError});
       setPassword({...password, error: passwordError});
       return;
     }
-    setLoading(true);
     const response = await signUpUser({
       name: name.value,
       email: email.value,
@@ -83,13 +88,18 @@ const Register = ({navigation}) => {
           errorText={password.error}
           secureTextEntry
         />
-        <Btn placeHolder="Sign In " onPress={onSignUpPressed} />
+        {!loading ? (
+          <Btn placeHolder="Sign In " onPress={onSignUpPressed} />
+        ) : (
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+        )}
         <P>{error}</P>
         <CreateAccount onPress={() => navigation.navigate('Login')}>
           <H3>
             Already Registered? <GreenText> Login Now</GreenText>
           </H3>
         </CreateAccount>
+        <CustomModal message={error} onDismiss={() => setError('')} />
       </Center>
     </Bg>
   );

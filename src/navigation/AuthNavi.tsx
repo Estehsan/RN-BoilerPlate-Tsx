@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {GetStarted, Login, Register, Reset} from '../screens/auth';
+import {GetStarted, Loading, Login, Register, Reset} from '../screens/auth';
 
 const Stack = createNativeStackNavigator();
 
@@ -9,6 +9,8 @@ const AuthNavi = () => (
     screenOptions={{
       headerShown: false,
     }}>
+    {/* <Stack.Screen name="Loading" component={Loading} /> */}
+
     <Stack.Screen name="GetStarted" component={GetStarted} />
 
     <Stack.Screen name="Reset" component={Reset} />

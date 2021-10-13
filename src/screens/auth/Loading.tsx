@@ -1,20 +1,20 @@
 import React from 'react';
 import {ActivityIndicator} from 'react-native';
+import firebase from 'firebase/app';
 import {Bg} from '../../component/basics';
 import {theme} from '../../theme';
-import {authen} from '../../config/firebase';
 
-export default function Loading({navigation}) {
-  authen.onAuthStateChanged(user => {
+export default function AuthLoadingScreen({navigation}) {
+  firebase.auth().onAuthStateChanged(user => {
     if (user) {
       // User is logged in
       navigation.reset({
-        routes: [{name: 'Home'}],
+        routes: [{name: 'GetStarted'}],
       });
     } else {
       // User is not logged in
       navigation.reset({
-        routes: [{name: 'GetStarted'}],
+        routes: [{name: 'Login'}],
       });
     }
   });

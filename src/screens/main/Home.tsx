@@ -1,14 +1,20 @@
-import React, {FC, useState} from 'react';
-import {Bg, H1, H2, Ce, H3} from '../../component/basics';
+import React, {FC, useEffect, useState} from 'react';
+import {Bg, H3} from '../../component/basics';
 import {logoutUser} from '../../config/authApi';
-import {authen, db} from '../../config/firebase';
+import {authen} from '../../config/firebase';
 import styled from 'styled-components';
 import Btn from '../../component/basics/Btn';
+
 // import {FlatList} from 'react-native';
+
 const Home: FC = () => {
   return (
     <Bg>
       <Center>
+        <H3>ID : {authen.currentUser?.uid}</H3>
+
+        <H3>Email : {authen.currentUser?.email}</H3>
+        <H3>displayName : {authen.currentUser?.displayName}</H3>
         <Btn onPress={logoutUser} placeHolder="Logout" />
       </Center>
     </Bg>
@@ -31,5 +37,4 @@ const LogoutBtn = styled.Pressable`
   align-items: center;
   background-color: #34a5dd;
   border-radius: 10;
-  margin-right: ;
 `;

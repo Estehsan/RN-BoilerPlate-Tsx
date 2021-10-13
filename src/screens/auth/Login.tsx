@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
+import {ActivityIndicator} from 'react-native';
 import styled from 'styled-components';
 import {Bg, CustomModal, H1, H2, H3} from '../../component/basics';
 import Btn from '../../component/basics/Btn';
 import Tinput from '../../component/basics/Tinput';
 import {loginUser} from '../../config/authApi';
+import {theme} from '../../theme';
 import {emailVali} from '../../validator/emailVali';
 import {passVali} from '../../validator/passVali';
 
@@ -70,8 +72,8 @@ const Login = ({navigation}) => {
             Fortgot Password? <GreenText> Reset Now</GreenText>
           </H3>
         </ForgotPass>
-        {loading === null ? (
-          <H1>Loading</H1>
+        {loading ? (
+          <ActivityIndicator size="large" color={theme.colors.primary} />
         ) : (
           <Btn placeHolder="Sign In " onPress={onLoginPressed} />
         )}

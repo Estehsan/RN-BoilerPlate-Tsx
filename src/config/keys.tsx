@@ -13,7 +13,7 @@ export const FIREBASE_CONFIG = {
 
 // 👇 Google ID's are here 👇
 export const WEB_CLIENT_ID =
-  '175118731471-sjhbens0tb9dnri7p1cmkk1t48670128.apps.googleusercontent.com';
+  '75118731471-aggg9e5o891n3tdscmk62bf9oatevqno.apps.googleusercontent.com';
 
 // 👇 Facebook App key Here 👇
 export const APP_KEY = '857933798245745';
