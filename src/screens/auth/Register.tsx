@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import styled from 'styled-components';
 
 import {signUpUser} from '../../config/authApi';
@@ -11,8 +11,11 @@ import {passVali} from '../../validator/passVali';
 import {nameVali} from '../../validator/nameVali';
 import {ActivityIndicator} from 'react-native';
 import {theme} from '../../theme';
+import {AuthContext} from '../../store/AuthProvider';
 
 const Register = ({navigation}) => {
+  // const {register} = useContext(AuthContext);
+
   const [name, setName] = useState({value: '', error: ''});
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});

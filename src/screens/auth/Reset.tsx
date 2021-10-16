@@ -1,15 +1,18 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {emailVali} from '../../validator/emailVali';
 import styled from 'styled-components';
 import {Bg, CustomModal, H1, H2, H3} from '../../component/basics';
 import Tinput from '../../component/basics/Tinput';
 import Btn from '../../component/basics/Btn';
 import {sendEmailWithPassword} from '../../config/authApi';
+import {AuthContext} from '../../store';
 
 const Reset = () => {
   const [email, setEmail] = useState({value: '', error: ''});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({value: '', error: ''});
+
+  const {resetPass} = useContext(AuthContext);
 
   const sendResetPasswordEmail = async () => {
     const emailError = emailVali(email.value);
@@ -50,7 +53,7 @@ const Reset = () => {
           textContentType="emailAddress"
           keyboardType="email-address"
         />
-        <Btn placeHolder="Reset Your Email " onPress={sendResetPasswordEmail} />
+        <Btn placeHolder="Reset Your Email " onPress={resetPass} />
         <CustomModal
           {...error}
           onDismiss={() => setError({value: '', type: ''})}

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Bg, H1, H3, H4, TransparentBtn} from '../../component/basics';
 import styled from 'styled-components';
 import Btn from '../../component/basics/Btn';
@@ -6,9 +6,11 @@ import {fbLogin, signInWithGoogle} from '../../config/authApi';
 import {Settings, Profile} from 'react-native-fbsdk-next';
 
 import {APP_KEY} from '../../config/keys';
+import {AuthContext} from '../../store';
 
 const GetStarted = ({navigation}) => {
-  const [initializing, setInitializing] = useState(true);
+  const {googleLogin, onFbLogin} = useContext(AuthContext);
+
   const [user, setUser] = useState();
 
   Settings.setAppID(APP_KEY);
@@ -22,13 +24,13 @@ const GetStarted = ({navigation}) => {
           fontName="facebook"
           fcolor="#3b5998"
           placeHolder="Sign In with Facebook"
-          onPress={fbLogin}
+          onPress={onFbLogin}
         />
         <TransparentBtn
           fontName="google"
           placeHolder="Sign In with Google"
           fcolor="#ffbb00"
-          onPress={signInWithGoogle}
+          onPress={googleLogin}
         />
         <Btn
           placeHolder="Sign In with Email"

@@ -1,3 +1,3 @@
-import store from './store';
+import {AuthProvider, AuthContext} from './AuthProvider';
 
-export {store};
+export {AuthProvider, AuthContext};

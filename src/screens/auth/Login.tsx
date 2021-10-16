@@ -1,15 +1,18 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {ActivityIndicator} from 'react-native';
 import styled from 'styled-components';
 import {Bg, CustomModal, H1, H2, H3} from '../../component/basics';
 import Btn from '../../component/basics/Btn';
 import Tinput from '../../component/basics/Tinput';
-import {loginUser} from '../../config/authApi';
+import {authen} from '../../config/firebase';
+import {AuthContext} from '../../store';
 import {theme} from '../../theme';
 import {emailVali} from '../../validator/emailVali';
 import {passVali} from '../../validator/passVali';
 
 const Login = ({navigation}) => {
+  const {login, setUsers, users} = useContext(AuthContext);
+
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,10 +28,12 @@ const Login = ({navigation}) => {
       return;
     }
     setLoading(true);
-    const response = await loginUser({
-      email: email.value,
-      password: password.value,
-    });
+    const em = email.value;
+    const ps = password.value;
+
+    const response = await login(em, ps);
+    setUsers(response);
+
     if (response.error) {
       setError(response.error);
     }
@@ -41,7 +46,7 @@ const Login = ({navigation}) => {
         <H1>Hello!</H1>
         <H1 />
         <H3>Enter Your Details Below!</H3>
-        <H1 />
+        {/* <H1>{users.email}</H1> */}
 
         <Tinput
           iconName="email"
@@ -70,6 +75,9 @@ const Login = ({navigation}) => {
         <ForgotPass onPress={() => navigation.navigate('Reset')}>
           <H3>
             Fortgot Password? <GreenText> Reset Now</GreenText>
+          </H3>
+          <H3>
+            <GreenText> Reset Now</GreenText>
           </H3>
         </ForgotPass>
         {loading ? (
