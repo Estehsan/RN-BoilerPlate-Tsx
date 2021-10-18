@@ -1,17 +1,14 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {Bg, H1, H3, H4, TransparentBtn} from '../../component/basics';
 import styled from 'styled-components';
 import Btn from '../../component/basics/Btn';
-import {fbLogin, signInWithGoogle} from '../../config/authApi';
-import {Settings, Profile} from 'react-native-fbsdk-next';
+import {Settings} from 'react-native-fbsdk-next';
 
 import {APP_KEY} from '../../config/keys';
 import {AuthContext} from '../../store';
 
 const GetStarted = ({navigation}) => {
   const {googleLogin, onFbLogin} = useContext(AuthContext);
-
-  const [user, setUser] = useState();
 
   Settings.setAppID(APP_KEY);
 

@@ -15,7 +15,7 @@ export default Btn;
 const styles = StyleSheet.create({
   main: {
     height: 70,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: '#4CA6A8',
     paddingHorizontal: 10,
     width: '80%',
     marginVertical: 10,

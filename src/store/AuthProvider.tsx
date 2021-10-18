@@ -9,7 +9,7 @@ import {
   GraphRequestManager,
   Profile,
 } from 'react-native-fbsdk-next';
-import {authen} from '../config/firebase';
+import {authen, db} from '../config/firebase';
 
 export const AuthContext = React.createContext();
 
@@ -35,10 +35,28 @@ export const AuthProvider = ({children}) => {
         },
         register: async (email, password, name) => {
           try {
-            await auth().createUserWithEmailAndPassword(email, password);
-            return auth().currentUser.updateProfile({
-              displayName: name,
+            const res = await auth().createUserWithEmailAndPassword(
+              email,
+              password,
+            );
+            const user = res.user;
+            await db.collection('users').add({
+              uid: user.uid,
+              name,
+              authProvider: 'local',
+              email,
+              img: null,
+              // createdAt: firestore.Timestamp.now,
             });
+            // return db.collection('users').doc(auth().currentUser.uid).set({
+            //   displayName: name,
+            //   email: email,
+            //   createdAt: firestore.Timestamp.now,
+            //   userImg: null,
+            // });
+            // return auth().currentUser.updateProfile({
+            //   displayName: name,
+            // });
           } catch (error) {
             return {
               error: error.message,
