@@ -1,46 +1,57 @@
-// import React, {FC, useState} from 'react';
-// import {Text} from 'react-native';
-// import {Bg, H1, H2} from '../../component/basics';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-// import Tinput from '../../component/basics/Tinput';
+import React, {FC, useContext, useEffect, useState} from 'react';
+import {Bg, H3} from '../../component/basics';
+import {authen} from '../../config/firebase';
+import styled from 'styled-components';
+import Btn from '../../component/basics/Btn';
+import {AuthContext} from '../../store';
+import {Image} from 'react-native';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
-// const Home: FC = () => {
-//   const [email, setEmail] = useState({value: '', error: ''});
-//   return (
-//     <Bg>
-//       <Icon name="facebook" size={20} color="red" />
+// import {FlatList} from 'react-native';
 
-//       <Text>Hailoasd</Text>
-//       <H1>Hialo</H1>
-//       <Tinput
-//         placeholder="Email"
-//         label="Email"
-//         iconName="email"
-//         error="Error hai ye "
-//         errorText="Eror deta hai"
-//         // onChangeText={e => {
-//         //   setEmail({value: e, error: ''});
-//         // }}
-//         value={email}
-//       />
-//       <Tinput
-//         placeholder="Email"
-//         label="Email"
-//         iconName="lock"
-//         error="Error hai ye "
-//         errorText="Eror deta hai"
-//         // onChangeText={e => {
-//         //   setEmail({value: e, error: ''});
-//         // }}
-//         value={email}
-//       />
-//       <H2>Hialo</H2>
-//     </Bg>
-//   );
-// };
+const Home: FC = () => {
+  const {users, setUsers, logout} = useContext(AuthContext);
+  console.log('This IS home===> ', users);
 
-// export default Home;
+  return (
+    <Bg>
+      <Center>
+        {/* <Image
+          style={{height: 300, width: 200, borderRadius: 100}}
+          source={{
+            uri: users.url,
+            // 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=389&q=80',
+          }}
+        /> */}
 
-// // const Main = styled.View`
-// //   flex: 1;
-// // `;
+        <H3> Name :{users?.name}</H3>
+        <H3></H3>
+
+        <H3> Email :{users?.email}</H3>
+        {/* <H3>FB Name :{users?.photoURL}</H3> */}
+
+        <H3></H3>
+
+        <Btn onPress={logout} placeHolder="Logout" />
+      </Center>
+    </Bg>
+  );
+};
+
+export default Home;
+
+const Main = styled.View`
+  flex: 1;
+`;
+const Center = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LogoutBtn = styled.Pressable`
+  justify-content: center;
+  align-items: center;
+  background-color: #34a5dd;
+  border-radius: 10;
+`;

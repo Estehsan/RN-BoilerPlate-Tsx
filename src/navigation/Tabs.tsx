@@ -1,26 +1,33 @@
-import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {GetStarted, Login, Register} from '../screens/auth';
-// import {Home} from '../screens/main';
+// import React from 'react';
 
-const Stack = createNativeStackNavigator();
+// import {NavigationContainer} from '@react-navigation/native';
+// import {createNativeStackNavigator} from '@react-navigation/native-stack';
+// import AuthNavi from './AuthNavi';
+// import AppNavi from './AppNavi';
 
-const Tabs = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Screen name="GetStarted" component={GetStarted} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Register" component={Register} />
+// const Stack = createNativeStackNavigator();
 
-        {/* <Stack.Screen name="Home" component={Home} /> */}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+// const Tabs = () => {
+//   // Set an initializing state whilst Firebase connects
+//   const [initializing, setInitializing] = useState(true);
+//   const [user, setUser] = useState();
 
-export default Tabs;
+//   // Handle user state changes
+//   function onAuthStateChanged(user) {
+//     setUser(user);
+//     if (initializing) setInitializing(false);
+//   }
+//   useEffect(() => {
+//     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+//     return subscriber; // unsubscribe on unmount
+//   }, []);
+//   if (initializing) return null;
+
+//   return (
+//     <NavigationContainer>
+//       {user ? <AppNavi /> : <AuthNavi />}
+//     </NavigationContainer>
+//   );
+// };
+
+// export default Tabs;
