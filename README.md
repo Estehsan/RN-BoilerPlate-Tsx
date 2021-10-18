@@ -2,7 +2,6 @@
 
 ![github](https://user-images.githubusercontent.com/7809332/137706672-541d7e54-5bb0-4526-9d9f-c20c5662de6e.png)
 
-
 # React Native Boilerplate
 
 Are you looking to get started with React Native development? I’ve created a boilerplate that can help you kickstart your project. It includes everything from Design to Development, and it also has 100% code coverage. Check out the repo on GitHub!
@@ -52,10 +51,20 @@ Go to `src/config/keys.tsx` and replace `FIREBASE_CONFIG` with your own firebase
   appId: xxx,
   measurementId: xxx,
 ```
-    
+Replace `WEB_CLIENT_ID` with your own Google ID.
+
+```
+export const WEB_CLIENT_ID =
+  ' xxx ';
+```
+Replace `APP_KEY` with your own Facebook App.
+
+```
+export const APP_KEY =
+  '  xxx  ';
+```
 ## Badges
 
-Add badges from somewhere like: [shields.io](https://shields.io/)
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
