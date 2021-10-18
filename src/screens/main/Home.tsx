@@ -11,6 +11,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const Home: FC = () => {
   const {users, setUsers, logout} = useContext(AuthContext);
+  console.log('This IS home===> ', users);
 
   return (
     <Bg>
@@ -23,20 +24,14 @@ const Home: FC = () => {
           }}
         /> */}
 
-        <H3> Name :{users?.email}</H3>
-        <H3> Name :{authen.currentUser?.email}</H3>
+        <H3> Name :{users?.name}</H3>
+        <H3></H3>
 
         <H3> Email :{users?.email}</H3>
         {/* <H3>FB Name :{users?.photoURL}</H3> */}
 
         <H3></H3>
 
-        {/* <H3>Google Email : {users.email}</H3>
-        <H3>Google Name : {users.name}</H3> */}
-        <H3></H3>
-        {/* 
-        <H3>Login Name : {authen.currentUser?.displayName}</H3>
-        <H3> Login email : {authen.currentUser?.email}</H3> */}
         <Btn onPress={logout} placeHolder="Logout" />
       </Center>
     </Bg>

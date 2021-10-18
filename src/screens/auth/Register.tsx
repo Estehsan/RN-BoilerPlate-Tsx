@@ -1,34 +1,29 @@
 import React, {useContext, useState} from 'react';
 import styled from 'styled-components';
 
-import {signUpUser} from '../../config/authApi';
-
 import {Bg, CustomModal, H1, H3, P} from '../../component/basics';
 import Btn from '../../component/basics/Btn';
 import Tinput from '../../component/basics/Tinput';
 import {emailVali} from '../../validator/emailVali';
 import {passVali} from '../../validator/passVali';
 import {nameVali} from '../../validator/nameVali';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, KeyboardAvoidingView} from 'react-native';
 import {theme} from '../../theme';
 import {AuthContext} from '../../store/AuthProvider';
 
 const Register = ({navigation}) => {
-  // const {register} = useContext(AuthContext);
+  const {register, setUsers} = useContext(AuthContext);
 
   const [name, setName] = useState({value: '', error: ''});
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
 
   const onSignUpPressed = async () => {
-    setLoading(true);
-
     const nameError = nameVali(name.value);
     const emailError = emailVali(email.value);
     const passwordError = passVali(password.value);
-    setLoading(false);
 
     if (emailError || passwordError || nameError) {
       setName({...name, error: nameError});
@@ -36,11 +31,14 @@ const Register = ({navigation}) => {
       setPassword({...password, error: passwordError});
       return;
     }
-    const response = await signUpUser({
-      name: name.value,
-      email: email.value,
-      password: password.value,
-    });
+
+    setLoading(true);
+    const em = email.value;
+    const ps = password.value;
+    const na = name.value;
+
+    const response = await register(em, ps, na);
+    setUsers(response);
 
     if (response.error) {
       setError(response.error);
@@ -50,7 +48,7 @@ const Register = ({navigation}) => {
 
   return (
     <Bg>
-      <Center>
+      <Center behavior="padding">
         <H1>Register Now!</H1>
         <H1 />
         <H3>Enter Your Details Below!</H3>
@@ -110,7 +108,7 @@ const Register = ({navigation}) => {
 
 export default Register;
 
-const Center = styled.View`
+const Center = styled.KeyboardAvoidingView`
   flex: 1;
   justify-content: center;
   align-items: center;

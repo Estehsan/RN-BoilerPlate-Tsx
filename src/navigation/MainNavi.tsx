@@ -13,7 +13,9 @@ import {AuthContext, AuthProvider} from '../store/AuthProvider';
 const MainNavi = () => {
   const {users, setUsers} = useContext(AuthContext);
   const [initializing, setInitializing] = useState(true);
+
   console.log('Data', users);
+
   const onAuthStateChanged = users => {
     setUsers(users);
     if (initializing) setInitializing(false);

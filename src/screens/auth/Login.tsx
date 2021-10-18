@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, KeyboardAvoidingView} from 'react-native';
 import styled from 'styled-components';
 import {Bg, CustomModal, H1, H2, H3} from '../../component/basics';
 import Btn from '../../component/basics/Btn';
@@ -42,7 +42,7 @@ const Login = ({navigation}) => {
 
   return (
     <Bg>
-      <Center>
+      <Center behavior="padding">
         <H1>Hello!</H1>
         <H1 />
         <H3>Enter Your Details Below!</H3>
@@ -74,10 +74,7 @@ const Login = ({navigation}) => {
         />
         <ForgotPass onPress={() => navigation.navigate('Reset')}>
           <H3>
-            Fortgot Password? <GreenText> Reset Now</GreenText>
-          </H3>
-          <H3>
-            <GreenText> Reset Now</GreenText>
+            Forgot Password? <GreenText> Reset Now</GreenText>
           </H3>
         </ForgotPass>
         {loading ? (
@@ -100,7 +97,7 @@ const Login = ({navigation}) => {
 
 export default Login;
 
-const Center = styled.View`
+const Center = styled.KeyboardAvoidingView`
   flex: 1;
   justify-content: center;
   align-items: center;

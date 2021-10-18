@@ -33,6 +33,18 @@ export const AuthProvider = ({children}) => {
             };
           }
         },
+        register: async (email, password, name) => {
+          try {
+            await auth().createUserWithEmailAndPassword(email, password);
+            return auth().currentUser.updateProfile({
+              displayName: name,
+            });
+          } catch (error) {
+            return {
+              error: error.message,
+            };
+          }
+        },
         googleLogin: async () => {
           // Get the users ID token
           const {idToken} = await GoogleSignin.signIn();
@@ -85,22 +97,6 @@ export const AuthProvider = ({children}) => {
                 const AllData = result.additionalUserInfo.profile;
                 setUsers(AllData);
               });
-          } catch (error) {
-            return {
-              error: error.message,
-            };
-          }
-        },
-        register: async (email, password, name) => {
-          try {
-            const {user} = await authen.createUserWithEmailAndPassword(
-              email,
-              password,
-            );
-            await authen.currentUser.updateProfile({
-              displayName: name,
-            });
-            return {user};
           } catch (error) {
             return {
               error: error.message,
